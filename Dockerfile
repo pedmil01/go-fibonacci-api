@@ -1,5 +1,12 @@
-docker build -t pedmil01/go-fibonacci-api:1.0.0 .
-docker run -p 8080:8080 pedmil01/go-fibonacci-api:1.0.0
-docker login
-docker push pedmil01/go-fibonacci-api
+FROM golang:1.24-alpine
 
+WORKDIR /app
+
+COPY go.mod ./
+RUN go mod tidy
+
+COPY . .
+
+RUN go build -o main .
+
+CMD ["./main"]
